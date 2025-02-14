@@ -1,0 +1,26 @@
+# Loop for events
+while True:
+event, values = window.read()
+if event == "Exit" or event == sg.WIN_CLOSED:
+break
+elif event == "Record":
+# Initialize recognizer
+r = sr.Recognizer()
+# Record audio
+with sr.Microphone() as source:
+audio = r.listen(source)
+# Recognize speech using Google speech recognition
+try:
+text = r.recognize_google(audio)
+window["
+-OUTPUT-
+"].update(text)
+except sr.UnknownValueError:
+window["
+-OUTPUT-
+"].update("Could not understand audio")
+except sr.RequestError as e:
+window["
+-OUTPUT-
+"].update(f"Error: {e}")
+window.close()
